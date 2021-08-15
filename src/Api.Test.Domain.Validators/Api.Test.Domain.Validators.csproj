@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Api.Test.Partner\Api.Test.Partner.csproj" />
+      <ProjectReference Include="..\Api.Test.Domain\Api.Test.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="10.3.0" />
+    </ItemGroup>
+
+</Project>
