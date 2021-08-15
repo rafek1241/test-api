@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Api.Test.API.Commands.Requests;
 using Api.Test.API.Queries.Requests;
 using Api.Test.Domain.Models;
 using MediatR;
@@ -41,6 +42,24 @@ namespace Api.Test.API.Controllers
             }
 
             return Ok(customer);
+        }
+
+        [HttpPost]
+        [SwaggerResponse(StatusCodes.Status201Created)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] Customer customer, CancellationToken token)
+        {
+            try
+            {
+                var id = await _mediator.Send(new RegisterCustomer(customer), token);
+                return CreatedAtAction(nameof(Get), new { id });
+
+            }
+            catch (Exception ex)
+            {
+                //TODO: validation exception convert to bad request
+                throw;
+            }
         }
     }
 }
