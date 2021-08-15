@@ -3,24 +3,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Test.API.Commands.Requests;
 using Api.Test.Domain;
+using Api.Test.Domain.Models;
+using Api.Test.Partner;
+using Api.Test.Partner.Interfaces;
+using FluentValidation;
 using MediatR;
 
 namespace Api.Test.API.Commands.Handlers
 {
     public class RegisterCustomerHandler : IRequestHandler<RegisterCustomer, Guid>
     {
-        private readonly ICompanyReceiver _companyReceiver;
+        private readonly IPartnerResolver<ICustomerValidator> _validationResolver;
+        private readonly IRepository<Customer> _repository;
 
-        public RegisterCustomerHandler(ICompanyReceiver companyReceiver)
+        public RegisterCustomerHandler(
+            IPartnerResolver<ICustomerValidator> validationResolver,
+            IRepository<Customer> repository
+        )
         {
-            _companyReceiver = companyReceiver;
+            _validationResolver = validationResolver;
+            _repository = repository;
         }
-        
-        public Task<Guid> Handle(RegisterCustomer request, CancellationToken cancellationToken)
-        {
-            var company = _companyReceiver;
 
-            throw new NotImplementedException();
+        public async Task<Guid> Handle(RegisterCustomer request, CancellationToken cancellationToken)
+        {
+            var validator = _validationResolver.Resolve();
+            await validator.ValidateAndThrowAsync(request.Customer, cancellationToken);
+            
+            return await _repository.Post(request.Customer);
         }
     }
 }
