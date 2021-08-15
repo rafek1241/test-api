@@ -15,7 +15,11 @@ namespace Api.Test.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Startup).Assembly);
-            services.AddMvc();
+            services.AddMvc(
+                cfg =>
+                {
+                    cfg.Filters.Add<ValidationExceptionFilter>();
+                });
             services.AddSwaggerGen(
                 c =>
                 {
