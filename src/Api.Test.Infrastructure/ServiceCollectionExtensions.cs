@@ -15,6 +15,8 @@ namespace Api.Test.Infrastructure
                         .GetConnectionString(Constraints.ApiConnectionStringName)
                 )
             );
+
+            collection.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
     }
 }

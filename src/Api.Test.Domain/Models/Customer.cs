@@ -1,11 +1,7 @@
-using System;
-
 namespace Api.Test.Domain.Models
 {
-    public class Customer
+    public class Customer : Entity
     {
-        public Guid CustomerId { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Address Address { get; set; }
