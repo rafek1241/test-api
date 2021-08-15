@@ -1,5 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Api.Test.API.Queries.Requests;
+using Api.Test.Domain.Models;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Test.API.Controllers
 {
@@ -7,14 +15,32 @@ namespace Api.Test.API.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<object> Get()
+        private readonly IMediator _mediator;
+
+        public CustomerController(IMediator mediator)
         {
-            return new[]
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<Customer>> Get(CancellationToken token) =>
+            await _mediator.Send(new GetCustomers(), token);
+
+        [HttpGet]
+        [Route("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(Customer))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        [SwaggerResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(Guid id, CancellationToken token)
+        {
+            var customer = await _mediator.Send(new GetCustomer(id), token);
+            if (customer == null)
             {
-                new { Model = "elo1" },
-                new { Model = "elo2" }
-            };
+                return NotFound();
+            }
+
+            return Ok(customer);
         }
     }
 }
