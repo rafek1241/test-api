@@ -1,4 +1,5 @@
 using Api.Test.Domain;
+using Api.Test.Partner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace Api.Test.Infrastructure
             );
 
             collection.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            collection.AddScoped(typeof(IPartnerResolver<>), typeof(PartnerResolver<>));
         }
     }
 }

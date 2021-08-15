@@ -5,11 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="10.3.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.18" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Api.Test.Partner\Api.Test.Partner.csproj" />
       <ProjectReference Include="..\Api.Test.Domain\Api.Test.Domain.csproj" />
     </ItemGroup>
 
