@@ -1,4 +1,5 @@
 using Api.Test.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace Api.Test.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(Startup).Assembly);
             services.AddMvc();
             services.AddSwaggerGen(
                 c =>
@@ -25,6 +27,8 @@ namespace Api.Test.API
                             Version = "v1"
                         }
                     );
+                    
+                    c.EnableAnnotations();
                 }
             );
             
@@ -40,10 +44,9 @@ namespace Api.Test.API
             }
 
             app.UseRouting();
-
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "My API v1"));
-            app.UseEndpoints(x => x.MapControllers());
+            app.UseEndpoints(x => x.MapDefaultControllerRoute());
         }
     }
 }
