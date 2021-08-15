@@ -17,7 +17,10 @@ namespace Api.Test.API.Queries.Handlers
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Customer>> Handle(GetCustomers request, CancellationToken token) =>
+        public async Task<IEnumerable<Customer>> Handle(
+            GetCustomers request,
+            CancellationToken token
+        ) =>
             await _repository.Get(token);
     }
 }

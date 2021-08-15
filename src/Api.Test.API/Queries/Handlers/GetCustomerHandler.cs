@@ -15,8 +15,11 @@ namespace Api.Test.API.Queries.Handlers
         {
             _repository = repository;
         }
-        
-        public Task<Customer> Handle(GetCustomer request, CancellationToken cancellationToken) => 
+
+        public Task<Customer> Handle(
+            GetCustomer request,
+            CancellationToken cancellationToken
+        ) =>
             _repository.Get(request.Id, cancellationToken);
     }
 }
