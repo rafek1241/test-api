@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Test.API.Queries.Requests;
@@ -8,7 +7,7 @@ using MediatR;
 
 namespace Api.Test.API.Queries.Handlers
 {
-    public class GetCustomersHandler : IRequestHandler<GetCustomers, IEnumerable<Customer>>
+    public class GetCustomersHandler : IRequestHandler<GetCustomers, Page<Customer>>
     {
         private readonly IRepository<Customer> _repository;
 
@@ -17,10 +16,10 @@ namespace Api.Test.API.Queries.Handlers
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Customer>> Handle(
+        public async Task<Page<Customer>> Handle(
             GetCustomers request,
             CancellationToken token
         ) =>
-            await _repository.Get(token);
+            await _repository.Get(request.Skip, request.Take,token);
     }
 }

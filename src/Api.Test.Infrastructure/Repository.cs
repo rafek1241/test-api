@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Test.Domain;
@@ -19,7 +20,25 @@ namespace Api.Test.Infrastructure
             entities = context.Set<T>();
         }
 
-        public async Task<IList<T>> Get(CancellationToken token = default) => await entities.ToListAsync(token);
+        public async Task<Page<T>> Get(
+            int skip,
+            int take,
+            CancellationToken token = default
+        )
+        {
+            using (var tran = await _context.Database.BeginTransactionAsync(token))
+            {
+                var total = entities.Count();
+                var items = await entities
+                    .Skip(skip)
+                    .Take(take)
+                    .ToListAsync();
+                var page = new Page<T>(take, skip, total, items);
+
+                await tran.CommitAsync();
+                return page;
+            }
+        }
 
         public Task<T> Get(Guid id, CancellationToken token = default) => entities.SingleOrDefaultAsync(x => x.Id == id, token);
 

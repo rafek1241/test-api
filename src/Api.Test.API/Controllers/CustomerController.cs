@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Test.API.Commands.Requests;
 using Api.Test.API.Queries.Requests;
+using Api.Test.Domain;
 using Api.Test.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -24,9 +25,16 @@ namespace Api.Test.API.Controllers
         }
 
         [HttpGet]
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<Customer>> Get(CancellationToken token) =>
-            await _mediator.Send(new GetCustomers(), token);
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(Page<Customer>))]
+        public async Task<IActionResult> Get(
+            CancellationToken token,
+            int take = 10,
+            int skip = 0
+        )
+        {
+            var page = await _mediator.Send(new GetCustomers(take, skip), token);
+            return Ok(page);
+        }
 
         [HttpGet]
         [Route("{id}")]

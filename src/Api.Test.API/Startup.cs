@@ -3,6 +3,7 @@ using Api.Test.API.Filters;
 using Api.Test.Infrastructure;
 using Api.Test.Partner;
 using MediatR;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,9 @@ namespace Api.Test.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(Startup).Assembly);
+            var assembly = typeof(Startup).Assembly;
+            services.AddMediatR(assembly);
+            services.AddFluentValidation(new[] { assembly });
             services.AddMvc(
                 cfg =>
                 {
