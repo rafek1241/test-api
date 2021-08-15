@@ -49,17 +49,8 @@ namespace Api.Test.API.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] Customer customer, CancellationToken token)
         {
-            try
-            {
-                var id = await _mediator.Send(new RegisterCustomer(customer), token);
-                return CreatedAtAction(nameof(Get), new { id });
-
-            }
-            catch (Exception ex)
-            {
-                //TODO: validation exception convert to bad request
-                throw;
-            }
+            var id = await _mediator.Send(new RegisterCustomer(customer), token);
+            return CreatedAtAction(nameof(Get), new { id }, new { id });
         }
     }
 }

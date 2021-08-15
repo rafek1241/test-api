@@ -8,17 +8,17 @@ namespace Api.Test.Infrastructure
     public class PartnerResolver<TService> : IPartnerResolver<TService> where TService : IPartnerService
     {
         private readonly IEnumerable<TService> _implementations;
-        private readonly ICompanyReceiver _companyReceiver;
+        private readonly IPartnerReceiver _partnerReceiver;
 
-        public PartnerResolver(IEnumerable<TService> implementations, ICompanyReceiver companyReceiver)
+        public PartnerResolver(IEnumerable<TService> implementations, IPartnerReceiver partnerReceiver)
         {
             _implementations = implementations;
-            _companyReceiver = companyReceiver;
+            _partnerReceiver = partnerReceiver;
         }
         
         public TService Resolve()
         {
-            var currentPartner = _companyReceiver.Receive();
+            var currentPartner = _partnerReceiver.Receive();
             if (currentPartner == null)
             {
                 throw new ArgumentNullException(nameof(currentPartner), "Cannot resolve partner.");
