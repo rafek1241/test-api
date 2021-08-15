@@ -24,7 +24,7 @@ namespace Api.Test.Infrastructure
 
         public Task<T> Get(Guid id, CancellationToken token = default) => entities.SingleOrDefaultAsync(x => x.Id == id, token);
 
-        public async Task Post(T entity, CancellationToken token = default)
+        public async Task<Guid> Post(T entity, CancellationToken token = default)
         {
             if (entity == null)
             {
@@ -33,6 +33,7 @@ namespace Api.Test.Infrastructure
 
             await entities.AddAsync(entity, token);
             await _context.SaveChangesAsync(token);
+            return entity.Id;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Api.Test.Domain
     {
         Task<IList<T>> Get(CancellationToken token = default);
         Task<T> Get(Guid id, CancellationToken token = default);
-        Task Post(T entity, CancellationToken token = default);
+        Task<Guid> Post(T entity, CancellationToken token = default);
     }
 }
