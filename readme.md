@@ -8,5 +8,5 @@ There is a requirement that specific clients should have different behavior with
 
 * Pass custom http header (which is not compliant with HTTP).
 * Pass HTTP query/content parameter (which requires additional changes in endpoint).
-* (BEST) Assign authorization context to each client and during specific processing you can clearly see for which client you are referring to.
+* (BEST) Assign authorization context to each client and during specific processing you can clearly see for which client you are referring to - JWT token.
 * (Current approach which was easiest for now) Use cookie data to pass what client is.
