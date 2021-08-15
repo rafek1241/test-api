@@ -16,11 +16,10 @@ namespace Api.Test.API.Core
             _contextAccessor = contextAccessor;
         }
 
-        public Partner.Partner? Receive()
+        public PartnerEnum? Receive()
         {
             var request = _contextAccessor.HttpContext.Request;
-            var cookieKey = nameof(Partner.Partner)
-                .ToLower();
+            var cookieKey = Constraints.PartnerCookieKey;
             var containsCookie = request.Cookies
                 .TryGetValue(cookieKey, out var cookie);
 
@@ -32,14 +31,14 @@ namespace Api.Test.API.Core
                 });
             }
 
-            var parsed = Enum.TryParse(typeof(Partner.Partner), cookie, true, out var result);
+            var parsed = Enum.TryParse(typeof(PartnerEnum), cookie, true, out var result);
 
             if (parsed == false)
             {
                 throw new NotSupportedException($"Cookie '{cookieKey}={cookie}' in request has wrong value. We don't support such company for that operation.");
             }
 
-            return result as Partner.Partner?;
+            return result as PartnerEnum?;
         }
     }
 }

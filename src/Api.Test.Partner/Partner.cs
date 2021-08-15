@@ -1,6 +1,6 @@
 namespace Api.Test.Partner
 {
-    public enum Partner
+    public enum PartnerEnum
     {
         CompanyA,
         CompanyB

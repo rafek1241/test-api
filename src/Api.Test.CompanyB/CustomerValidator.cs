@@ -1,4 +1,4 @@
-using Api.Test.Domain;
+using Api.Test.Partner;
 using Api.Test.Partner.Interfaces;
 using FluentValidation;
 
@@ -12,6 +12,6 @@ namespace Api.Test.CompanyB
                 .NotEmpty();
         }
 
-        public Company Partner { get; } = Company.CompanyB;
+        public PartnerEnum Partner { get; } = PartnerEnum.CompanyB;
     }
 }

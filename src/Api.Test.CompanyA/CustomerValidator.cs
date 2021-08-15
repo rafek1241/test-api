@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using Api.Test.Domain;
+using Api.Test.Partner;
 using Api.Test.Partner.Interfaces;
 using FluentValidation;
 
@@ -17,6 +17,6 @@ namespace Api.Test.CompanyA
                 .WithMessage(customer => $"{nameof(customer.PersonalNumber)} should be of format `XXXXX-XXX` where X is a number");
         }
 
-        public Company Partner { get; } = Company.CompanyA;
+        public PartnerEnum Partner { get; } = PartnerEnum.CompanyA;
     }
 }

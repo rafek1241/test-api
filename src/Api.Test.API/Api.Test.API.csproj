@@ -21,7 +21,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Api.Test.CompanyA\Api.Test.CompanyA.csproj" />
+      <ProjectReference Include="..\Api.Test.CompanyB\Api.Test.CompanyB.csproj" />
       <ProjectReference Include="..\Api.Test.Infrastructure\Api.Test.Infrastructure.csproj" />
+      <ProjectReference Include="..\Api.Test.Partner.Interfaces\Api.Test.Partner.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

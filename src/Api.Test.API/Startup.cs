@@ -1,4 +1,7 @@
+using Api.Test.API.Core;
+using Api.Test.API.Filters;
 using Api.Test.Infrastructure;
+using Api.Test.Partner;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
