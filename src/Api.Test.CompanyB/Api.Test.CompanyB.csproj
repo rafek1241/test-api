@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Api.Test.Partner.Interfaces\Api.Test.Partner.Interfaces.csproj" />
+      <ProjectReference Include="..\Api.Test.Partner\Api.Test.Partner.csproj" />
+      <ProjectReference Include="..\Api.Test.Domain.Validators\Api.Test.Domain.Validators.csproj" />
+      <ProjectReference Include="..\Api.Test.Domain\Api.Test.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
