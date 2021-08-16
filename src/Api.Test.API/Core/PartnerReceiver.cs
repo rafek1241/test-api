@@ -29,8 +29,10 @@ namespace Api.Test.API.Core
             }
 
             var parsed = Enum.TryParse(typeof(PartnerEnum), cookie, true, out var result);
+            var nullableResult = (PartnerEnum?)result;
+            var resultEnum = nullableResult.GetValueOrDefault();
 
-            if (result == null || parsed == false)
+            if (resultEnum == default || parsed == false)
             {
                 throw new NoPartnerFound(
                     nameof(cookie),
@@ -38,7 +40,7 @@ namespace Api.Test.API.Core
                 );
             }
 
-            return (PartnerEnum)result!;
+            return resultEnum;
         }
     }
 }
