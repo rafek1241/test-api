@@ -7,7 +7,7 @@ namespace Api.Test.CompanyA
 {
     public class CustomerValidator : Domain.Validators.CustomerValidator, ICustomerValidator
     {
-        private readonly Regex _regex = new Regex("(\\d){5}-(\\d){3}");
+        private readonly Regex _regex = new Regex("^(\\d){5}-(\\d){3}$");
 
         public CustomerValidator()
         {
