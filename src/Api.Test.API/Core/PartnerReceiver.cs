@@ -1,8 +1,8 @@
 using System;
+using Api.Test.API.Exceptions;
 using Api.Test.Domain;
 using Api.Test.Partner;
-using FluentValidation;
-using FluentValidation.Results;
+using Api.Test.Partner.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace Api.Test.API.Core
@@ -16,7 +16,7 @@ namespace Api.Test.API.Core
             _contextAccessor = contextAccessor;
         }
 
-        public PartnerEnum? Receive()
+        public PartnerEnum Receive()
         {
             var request = _contextAccessor.HttpContext.Request;
             var cookieKey = Constraints.PartnerCookieKey;
@@ -25,20 +25,20 @@ namespace Api.Test.API.Core
 
             if (containsCookie == false)
             {
-                throw new ValidationException(new[]
-                {
-                    new ValidationFailure($"Cookie `{cookieKey}`", "cookie needs to be filled.")
-                });
+                throw new NoCookiePassed(cookieKey);
             }
 
             var parsed = Enum.TryParse(typeof(PartnerEnum), cookie, true, out var result);
 
-            if (parsed == false)
+            if (result == null || parsed == false)
             {
-                throw new NotSupportedException($"Cookie '{cookieKey}={cookie}' in request has wrong value. We don't support such company for that operation.");
+                throw new NoPartnerFound(
+                    nameof(cookie),
+                    $"Cookie '{cookieKey}={cookie}' in request has wrong value. We don't support such company for that operation"
+                );
             }
 
-            return result as PartnerEnum?;
+            return (PartnerEnum)result!;
         }
     }
 }

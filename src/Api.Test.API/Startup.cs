@@ -25,7 +25,9 @@ namespace Api.Test.API
                 cfg =>
                 {
                     cfg.Filters.Add<ValidationExceptionFilter>();
-                });
+                    cfg.Filters.Add<NoCookiePassedExceptionFilter>();
+                }
+            );
             services.AddSwaggerGen(
                 c =>
                 {
