@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Api.Test.Partner;
+using Api.Test.Partner.Exceptions;
 
 namespace Api.Test.Infrastructure
 {
@@ -15,22 +16,24 @@ namespace Api.Test.Infrastructure
             _implementations = implementations;
             _partnerReceiver = partnerReceiver;
         }
-        
+
         public TService Resolve()
         {
             var currentPartner = _partnerReceiver.Receive();
-            if (currentPartner == null)
+            var partnerServices = _implementations
+                .Where(x => x.Partner == currentPartner)
+                .ToArray();
+            if (partnerServices.Length > 1)
             {
-                throw new ArgumentNullException(nameof(currentPartner), "Cannot resolve partner.");
-            }
-
-            var service = _implementations.SingleOrDefault(x => x.Partner == currentPartner);
-            if (service == null)
-            {
-                throw new ArgumentNullException(nameof(service), $"Service cannot be resolved because it does not exists for particular partner. \nPartner: '{currentPartner}', Tried to resolve: {typeof(TService).Name}");
+                throw new TooManyServicesForSamePartner<TService>(currentPartner, partnerServices);
             }
             
-            return service;
+            if (partnerServices.Any() == false)
+            {
+                throw new NoServiceForPartner<TService>(currentPartner);
+            }
+
+            return partnerServices.Single();
         }
     }
 }
