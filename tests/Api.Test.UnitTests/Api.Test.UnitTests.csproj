@@ -25,6 +25,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Api.Test.CompanyA\Api.Test.CompanyA.csproj" />
+      <ProjectReference Include="..\..\src\Api.Test.CompanyB\Api.Test.CompanyB.csproj" />
       <ProjectReference Include="..\..\src\Api.Test.Domain.Validators\Api.Test.Domain.Validators.csproj" />
       <ProjectReference Include="..\..\src\Api.Test.Infrastructure\Api.Test.Infrastructure.csproj" />
       <ProjectReference Include="..\..\src\Api.Test.Partner\Api.Test.Partner.csproj" />
