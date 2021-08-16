@@ -22,6 +22,7 @@ namespace Api.Test.API
             var assembly = typeof(Startup).Assembly;
             services.AddMediatR(assembly);
             services.AddFluentValidation(new[] { assembly });
+            services.AddSingleton(Log.Logger);
             services.AddLogging(x=>x.AddSerilog());
             services.AddMvc(
                 cfg =>
