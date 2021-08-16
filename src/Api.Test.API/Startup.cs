@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Api.Test.API
 {
@@ -21,6 +22,7 @@ namespace Api.Test.API
             var assembly = typeof(Startup).Assembly;
             services.AddMediatR(assembly);
             services.AddFluentValidation(new[] { assembly });
+            services.AddLogging(x=>x.AddSerilog());
             services.AddMvc(
                 cfg =>
                 {
