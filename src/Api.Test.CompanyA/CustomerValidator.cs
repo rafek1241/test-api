@@ -14,7 +14,7 @@ namespace Api.Test.CompanyA
             RuleFor(x => x.PersonalNumber)
                 .NotEmpty()
                 .Must(input => _regex.IsMatch(input))
-                .WithMessage(customer => $"{nameof(customer.PersonalNumber)} should be of format `XXXXX-XXX` where X is a number");
+                .WithMessage(customer => $"Should be of format `XXXXX-XXX` where X is a number");
         }
 
         public PartnerEnum Partner { get; } = PartnerEnum.CompanyA;
